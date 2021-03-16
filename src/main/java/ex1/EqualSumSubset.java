@@ -11,7 +11,7 @@ public class EqualSumSubset {
 
     public static void main(String[] args) {
         EqualSumSubset ess = new EqualSumSubset();
-        int[] set = {1, 2, 4, 5};
+        int[] set = {1, 1, 1, 1};
         ImmutablePair<int[], List<List<Integer>>> results = ess.findSubsetWithEqualSum(set);
         print(results.left);
         System.out.println(results.right);
