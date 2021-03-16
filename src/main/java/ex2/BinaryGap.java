@@ -7,12 +7,12 @@ public class BinaryGap {
 
     public static void main(String[] args) {
         BinaryGap gap = new BinaryGap();
-        int argument = 0B1010;
-        System.out.println(gap.calculateBinaryGap(argument));
-        System.out.println(gap.calculateBinaryGapV2(argument));
+        int argument = 0B1101001000;
+        System.out.println("Gap in v1 is :" + gap.calculateBinaryGapV1(argument));
+        System.out.println("Gap in v2 is :" + gap.calculateBinaryGapV2(argument));
     }
 
-    public int calculateBinaryGap(int number) {
+    public int calculateBinaryGapV1(int number) {
         String binaryRepresentation = Integer.toBinaryString(number);
         System.out.println(binaryRepresentation);
         int biggestGapLength = 0;
@@ -22,17 +22,23 @@ public class BinaryGap {
             if (c == '0')
                 currentGapLength++;
             else {
-                if (biggestGapLength < currentGapLength) {
+                if (biggestGapLength < currentGapLength)
                     biggestGapLength = currentGapLength;
-                }
+
                 currentGapLength = 0;
             }
         }
-        return Math.max(biggestGapLength, currentGapLength);
+// last sequences of zeros is not a binary gap
+//        return Math.max(biggestGapLength, currentGapLength);
+        return biggestGapLength;
     }
 
     public int calculateBinaryGapV2(int number) {
-        return (Arrays.stream(Integer.toBinaryString(number).split("1"))
+        //should remove trailing zeros
+//        System.out.println("Trailing zeros " + Integer.numberOfTrailingZeros(number));
+        String binaryString = Integer.toBinaryString(number);
+        String withoutTrailingZeros = binaryString.substring(0, binaryString.lastIndexOf("1"));
+        return (Arrays.stream(withoutTrailingZeros.split("1"))
                 .map(String::length)
                 .max(Comparator.naturalOrder()).orElse(0));
     }
